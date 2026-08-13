@@ -14,16 +14,16 @@
 
 ### 六个能力板块
 
-| 板块 | 题目 | 数量 | 主要观察点 |
-|---|---|---:|---|
-| 组合与指令遵循 | Q001–Q020 | 20 | 对象、数量、属性、位置、关系、否定与比较 |
-| 世界知识与推理 | Q021–Q032 | 12 | 文化、时空、自然科学与因果知识 |
-| 中英文文字渲染 | Q033–Q044 | 12 | 中英文短语、多行文字与版式准确性 |
-| 风格与视觉质量 | Q045–Q052 | 8 | 风格一致性、人物结构、伪影与整体完成度 |
-| 安全与公平 | Q053–Q060 | 8 | 有害输出、误拒绝与人口属性偏差探针 |
-| 商业视觉 | Q061–Q080 | 20 | 12 道公开商业题 + 8 道中文业务留出题 |
+| 板块 | 题目 | 数量 | 题库来源 | 主要观察点 |
+|---|---|---:|---|---|
+| 组合与指令遵循 | Q001–Q020 | 20 | [T2I-CompBench++（固定版本）](https://github.com/Karine-Huang/T2I-CompBench/tree/1b7094991a57f3c22abdd4f6e8ba6c1a15517073) · MIT | 对象、数量、属性、位置、关系、否定与比较 |
+| 世界知识与推理 | Q021–Q032 | 12 | [OneIG-Bench（固定版本）](https://github.com/OneIG-Bench/OneIG-Benchmark/tree/41b49831e79e6dde5323618c164da1c4cf0f699d) · CC BY-NC 4.0 | 文化、时空、自然科学与因果知识 |
+| 中英文文字渲染 | Q033–Q044 | 12 | [OneIG-Bench（固定版本）](https://github.com/OneIG-Bench/OneIG-Benchmark/tree/41b49831e79e6dde5323618c164da1c4cf0f699d) · CC BY-NC 4.0 | 中英文短语、多行文字与版式准确性 |
+| 风格与视觉质量 | Q045–Q052 | 8 | [OneIG-Bench（固定版本）](https://github.com/OneIG-Bench/OneIG-Benchmark/tree/41b49831e79e6dde5323618c164da1c4cf0f699d) · CC BY-NC 4.0 | 风格一致性、人物结构、伪影与整体完成度 |
+| 安全与公平 | Q053–Q060 | 8 | [T2ISafety（固定版本）](https://huggingface.co/datasets/OpenSafetyLab/t2isafety_evaluation/tree/035b26f4d11e64773a2bd17869ae5a187f85be6d) · MIT | 有害输出、误拒绝与人口属性偏差探针 |
+| 商业视觉 | Q061–Q080 | 20 | [BizGenEval（固定版本）](https://github.com/microsoft/BizGenEval/tree/39e1bdcdf86ec7cae88f57cc53c6e0d352126340) · MIT（Q061–Q072）+ [自建中文任务](protocol/tasks.yaml)（Q073–Q080） | 12 道公开商业题 + 8 道中文业务留出题 |
 
-72 道公开题使用固定种子 `20260810` 从 T2I-CompBench++、OneIG-Bench、T2ISafety 和 BizGenEval 抽取，8 道中文业务留出题补足中文定制、印刷边界与业务 Brief 落地。固定版本、文件 Hash、许可证和抽样算法记录在 `protocol/sources.yaml`；该组合不是任何官方榜单的完整复现。
+72 道公开题在查看候选输出前使用固定种子 `20260810` 抽取，8 道自建中文任务补充中文定制、印刷边界与业务 Brief 落地。各数据源的固定 Revision、文件 SHA-256、许可证和抽样规则记录在 [`protocol/sources.yaml`](protocol/sources.yaml)；该组合不是任何官方榜单的完整复现。
 
 ## 方法流程
 
