@@ -1,0 +1,61 @@
+schema_version: source-registry-v1
+status: sampled_draft
+sampling:
+  seed: 20260810
+  algorithm: "SHA-256 rank over seed|benchmark|stratum|source_id; choose lowest eligible ranks"
+  selected_before_candidate_outputs: true
+  source_prompt_translation: none
+  notes:
+    - "Public tasks were selected without inspecting candidate-model outputs."
+    - "GenAI-Bench was considered but deferred because the complete 1,600-row prompt pool could not be validated from the current packaged snapshot; no viewer fragment was used."
+    - "WISE was considered but not included because the official repository did not publish a dataset redistribution license at the pinned commit."
+
+sources:
+  - benchmark: T2I-CompBench++
+    role: instruction_following
+    task_count: 20
+    revision: 1b7094991a57f3c22abdd4f6e8ba6c1a15517073
+    license: MIT
+    source_url: https://github.com/Karine-Huang/T2I-CompBench
+    split_files:
+      - {path: examples/dataset/color_val.txt, sha256: 1634259756dbc77d13093d907d414480080ec9790a8c97ad09efaea7b2534f2d}
+      - {path: examples/dataset/shape_val.txt, sha256: 37e1a276906c7ea9516cbd7ac8501be896006c0c17ca7344f260562834455bae}
+      - {path: examples/dataset/texture_val.txt, sha256: fbb5363515b4a28009e360afaaaf389d2dd2289e50dbb0c6ef4ea0c7fe4f3d4f}
+      - {path: examples/dataset/spatial_val.txt, sha256: 8707a1d7e42ce3002d95363cf55f74bd043c843ae27108f5125aaaa7840ca988}
+      - {path: examples/dataset/3d_spatial_val.txt, sha256: c9953597315f36a5fcb41291bb19bdc6ab5f64a0fa760d691b4854a73f5d1fe9}
+      - {path: examples/dataset/non_spatial_val.txt, sha256: 04c56cc9ac441dc9ea6c5157652058bd1635b5308526dd31bb29a1caab9a758d}
+      - {path: examples/dataset/numeracy_val.txt, sha256: dad8df141604b70ba7554bec724e3db0a80023680769b5c514854ea2d2527bbe}
+      - {path: examples/dataset/complex_val.txt, sha256: 1b808018b8d9916db3d47d5aa2ef18377a3549a56901a474156f799824cdf3b4}
+
+  - benchmark: OneIG-Bench
+    role: [knowledge_reasoning, text_rendering, visual_quality]
+    task_count: 32
+    content_revision: 41b49831e79e6dde5323618c164da1c4cf0f699d
+    license: CC-BY-NC-4.0
+    license_source: https://huggingface.co/datasets/OneIG-Bench/OneIG-Bench
+    source_url: https://github.com/OneIG-Bench/OneIG-Benchmark
+    files:
+      - {path: OneIG-Bench.csv, sha256: e06c65b32252d82406fb1a27f13022b38d432c899a2486eb49ab0c100f83b3e1}
+      - {path: OneIG-Bench-ZH.csv, sha256: 8fc4ae1403db32dbb1203cc457361c3215500b34e741194a53f5002c9d824700}
+    usage_note: "Non-commercial evaluation and portfolio use only; retain attribution."
+
+  - benchmark: T2ISafety
+    role: safety_fairness
+    task_count: 8
+    revision: 035b26f4d11e64773a2bd17869ae5a187f85be6d
+    license: MIT
+    source_url: https://huggingface.co/datasets/OpenSafetyLab/t2isafety_evaluation
+    files:
+      - {path: fairness.jsonl, sha256: d5e0b477dfcef61b8eeef1098cacb7c8024b9a000d819d9d36c668a114f41db0}
+      - {path: safety.jsonl, sha256: 7bf7f851a321ed450d198374d4daa8af70bac3069205acdd99bc96bff1ee1e93}
+    safety_note: "Four neutral fairness probes and four low-graphic safety probes; safety images must not enter the public contact sheet."
+
+  - benchmark: BizGenEval
+    role: commercial_visual
+    task_count: 12
+    revision: 39e1bdcdf86ec7cae88f57cc53c6e0d352126340
+    license: MIT
+    source_url: https://github.com/microsoft/BizGenEval
+    files:
+      - {path: assets/bizgeneval.jsonl, sha256: f82e1931d97cafbfbaf9fd40f731f9ff6f2be6c0033f43596d55294394233a71}
+    allocation: "slides 3, poster 3, webpage 2, chart 2, scientific_figure 2; layout/text/attribute/knowledge each 3"

@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "absolute-output-schema-v1",
+  "title": "Absolute text-to-image Judge output",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "task_id", "blind_id", "criteria", "visual_quality"],
+  "properties": {
+    "schema_version": {"const": "absolute-output-v1"},
+    "task_id": {"type": "string", "pattern": "^Q(00[1-9]|0[1-7][0-9]|080)$"},
+    "blind_id": {"type": "string", "pattern": "^B(00[1-9]|0[1-9][0-9]|1[0-9]{2}|2[0-3][0-9]|240)$"},
+    "criteria": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["criterion_id", "verdict", "evidence"],
+        "properties": {
+          "criterion_id": {"type": "string", "minLength": 1},
+          "verdict": {
+            "enum": ["PASS", "FAIL", "OUTPUT_AMBIGUOUS", "MEASUREMENT_UNCERTAIN"]
+          },
+          "evidence": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "visual_quality": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["composition", "coherence", "artifact_control", "style_fidelity"],
+      "properties": {
+        "composition": {"type": "integer", "minimum": 1, "maximum": 5},
+        "coherence": {"type": "integer", "minimum": 1, "maximum": 5},
+        "artifact_control": {"type": "integer", "minimum": 1, "maximum": 5},
+        "style_fidelity": {"type": "integer", "minimum": 1, "maximum": 5}
+      }
+    },
+    "notes": {"type": "string"}
+  }
+}

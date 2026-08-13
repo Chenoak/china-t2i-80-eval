@@ -1,0 +1,205 @@
+schema_version: "candidates-v0.1-draft"
+metadata:
+  project_id: "china-t2i-80-eval"
+  status: "draft"
+  public_template: true
+  results_status: "not_started"
+  results_included: false
+  model_versions_verified: false
+  note: >-
+    本文件只声明拟评候选系列，不声称当前可用的精确 API ID、版本、价格或能力。
+    所有 null 字段必须在正式调用前依据供应商控制台与一次非计分冒烟调用核验并冻结。
+
+fixed_design:
+  task_count: 80
+  candidate_count: 3
+  generations_per_task_model: 1
+  formal_outcome_slot_count: 240
+  slot_formula: "80 tasks * 3 candidates * 1 scored generation"
+  replicate: 1
+
+candidates:
+  - model_id: "M01"
+    public_label: "万相"
+    provider: "阿里云"
+    intended_model_family: "Wan image generation"
+    exact_api_model_id: null
+    exact_model_version_or_snapshot: null
+    endpoint_region: null
+    api_endpoint: null
+    sdk_name_and_version: null
+    pricing:
+      verified_on: null
+      currency: "CNY"
+      unit_price: null
+      pricing_source: null
+    capability_checks:
+      single_image_output: null
+      target_aspect_ratios: null
+      prompt_expansion_can_be_disabled: null
+      watermark_can_be_disabled: null
+      online_search_can_be_disabled: null
+      response_contains_moderation_status: null
+    verification_status: "unverified_draft"
+
+  - model_id: "M02"
+    public_label: "Seedream"
+    provider: "火山引擎"
+    intended_model_family: "Seedream image generation"
+    exact_api_model_id: null
+    exact_model_version_or_snapshot: null
+    endpoint_region: null
+    api_endpoint: null
+    sdk_name_and_version: null
+    pricing:
+      verified_on: null
+      currency: "CNY"
+      unit_price: null
+      pricing_source: null
+    capability_checks:
+      single_image_output: null
+      target_aspect_ratios: null
+      prompt_expansion_can_be_disabled: null
+      watermark_can_be_disabled: null
+      online_search_can_be_disabled: null
+      response_contains_moderation_status: null
+    verification_status: "unverified_draft"
+
+  - model_id: "M03"
+    public_label: "混元"
+    provider: "腾讯云"
+    intended_model_family: "Hunyuan image generation"
+    exact_api_model_id: null
+    exact_model_version_or_snapshot: null
+    endpoint_region: null
+    api_endpoint: null
+    sdk_name_and_version: null
+    pricing:
+      verified_on: null
+      currency: "CNY"
+      unit_price: null
+      pricing_source: null
+    capability_checks:
+      single_image_output: null
+      target_aspect_ratios: null
+      prompt_expansion_can_be_disabled: null
+      watermark_can_be_disabled: null
+      online_search_can_be_disabled: null
+      response_contains_moderation_status: null
+    verification_status: "unverified_draft"
+
+fair_generation_protocol:
+  same_prompt_within_task: true
+  same_target_aspect_ratio_within_task: true
+  requested_images_per_call: 1
+  retain_first_formal_result_only: true
+  candidate_selection_or_cherry_picking: false
+  disable_when_supported:
+    - "watermark"
+    - "automatic prompt expansion"
+    - "online search"
+    - "optional post-processing"
+  no_content_retry_reasons:
+    - "low visual quality"
+    - "spelling error"
+    - "missing or extra object"
+    - "incorrect relation or attribute"
+    - "content-policy refusal"
+    - "unexpected but technically valid output"
+  allowed_technical_retry_reasons:
+    - "HTTP_429"
+    - "HTTP_5XX"
+    - "TIMEOUT"
+    - "EMPTY_FILE"
+    - "CORRUPT_FILE"
+    - "DOWNLOAD_FAILURE"
+  retry_policy:
+    identical_payload_required: true
+    maximum_technical_retries_per_slot: 2
+    maximum_extra_attempts_per_model: 16
+    stop_when_either_limit_is_reached: true
+  call_order:
+    randomized_within_each_task: true
+    seed: null
+    seed_status: "required_before_freeze"
+    rng_algorithm: null
+    implementation_version: null
+
+formal_slot_contract:
+  expected_task_ids: "Q001-Q080"
+  expected_model_ids: ["M01", "M02", "M03"]
+  unique_key:
+    - "experiment_id"
+    - "task_id"
+    - "model_id"
+    - "replicate"
+  required_terminal_statuses:
+    - "READABLE_IMAGE"
+    - "PROVIDER_REFUSAL"
+    - "TEXT_REFUSAL"
+    - "TECHNICAL_FAILURE"
+    - "EMPTY_OR_ERROR"
+    - "UNKNOWN"
+  required_trace_fields:
+    - "attempt_id"
+    - "prompt_hash"
+    - "request_payload_path"
+    - "raw_response_path"
+    - "exact_api_model_id"
+    - "exact_model_version_or_snapshot"
+    - "endpoint_region"
+    - "outcome_status"
+    - "provider_moderation_code"
+    - "original_image_hash"
+    - "latency_ms"
+    - "billed_cost_cny"
+    - "technical_success"
+    - "retry_reason"
+  invariants:
+    - "每个任务恰好三个正式槽位"
+    - "每个候选恰好80个正式槽位"
+    - "所有240个槽位必须有终态，即使没有图片"
+    - "重试 attempt 与计分 outcome 必须分表或通过字段明确区分"
+
+smoke_test_before_freeze:
+  scored: false
+  images_per_candidate: 1
+  pass_conditions:
+    - "API authentication succeeds"
+    - "exact model identity is captured from request or provider response"
+    - "one output or explicit refusal/error status can be persisted"
+    - "raw response, latency and billing basis are recorded"
+    - "image, when returned, decodes and hashes successfully"
+  failure_policy: "任一候选未跑通时，不启动240个正式结果槽位。"
+
+budget_template:
+  currency: "CNY"
+  candidate_generation_hard_cap: null
+  budget_cap_status: "required_before_freeze"
+  actual_costs_present: false
+  accounting_rules:
+    - "开发冒烟、正式首轮和技术重试分别列账"
+    - "以实际账单优先；不可观测时记 NA/unknown，不得记为0"
+    - "达到冻结的硬上限后停止新调用并保留已完成数据"
+
+freeze_gate:
+  required_before_status_frozen:
+    - "three exact_api_model_id values are verified"
+    - "three version/snapshot or provider-reported revision values are recorded when available"
+    - "regions, endpoints and SDK versions are recorded"
+    - "pricing basis and verification date are recorded or explicitly marked unknown"
+    - "all optional enhancements are checked and the chosen payload is frozen"
+    - "call-order seed, RNG algorithm and implementation version are frozen"
+    - "smoke tests pass for all three candidates"
+    - "file SHA-256 values are written to manifest.csv"
+
+public_release_policy:
+  include:
+    - "candidate IDs M01-M03 and verified public model identifiers after freeze"
+    - "non-secret request parameters"
+    - "terminal status counts, latency and cost summaries after completion"
+  exclude:
+    - "API keys or tokens"
+    - "signed download URLs"
+    - "account IDs, request credentials or private billing identifiers"
+    - "raw provider payload fields that expose secrets"

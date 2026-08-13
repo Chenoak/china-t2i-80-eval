@@ -1,0 +1,10 @@
+artifact_path,artifact_role,required,status,schema_version,sha256,frozen_at_utc,public_release,contains_results,notes
+protocol/tasks.yaml,frozen task definitions and source metadata,true,draft,,,,review_before_publish,false,"Expected 80 tasks: Q001-Q080; validate completeness and calculate SHA-256 before freeze"
+protocol/sources.yaml,source revisions licenses file hashes and deterministic sampling record,true,draft,source-registry-v1,,,public,false,"Tracks the exact redistributable sources used by the 72 public tasks"
+protocol/rubric.yaml,atomic rubric scoring and quality gates,true,draft,rubric-v0.1-draft,,,public,false,"Template only; no experimental results; calculate SHA-256 at freeze"
+protocol/candidates.yaml,candidate identities generation controls and slot contract,true,draft,candidates-v0.1-draft,,,public,false,"Exact API model IDs versions regions pricing and seeds remain unverified"
+protocol/judge.yaml,Judge identity schemas LR-RL protocol and audit controls,true,draft,judge-v0.1-draft,,,public,false,"Judge identity parameters hashes Gold thresholds and budget remain unset"
+protocol/manifest.csv,artifact inventory and freeze ledger,true,draft,manifest-v0.1-draft,,,public,false,"Self-hash intentionally blank; publish a detached checksum when frozen"
+.agents/skills/judge-t2i-evals/SKILL.md,reusable Judge workflow entry point,true,draft,,,,public,false,"Version and SHA-256 required before formal Judge calls"
+.agents/skills/judge-t2i-evals/references/absolute-output-schema.json,strict absolute review output schema,true,draft,absolute-output-schema-v1,,,public,false,"Implemented draft; additional properties prohibited"
+.agents/skills/judge-t2i-evals/references/pairwise-output-schema.json,strict ordinary pairwise output schema,true,draft,pairwise-output-schema-v1,,,public,false,"Implemented draft; selected pairs require LR and RL"

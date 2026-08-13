@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+
+# Local configuration and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials*.json
+
+# Runtime logs and temporary files
+logs/
+*.log
+*.tmp
+.DS_Store
+
+# Generated or potentially sensitive evaluation artifacts
+data/raw_responses/*
+!data/raw_responses/.gitkeep
+data/raw_images/*
+!data/raw_images/.gitkeep
+data/blind_images/*
+!data/blind_images/.gitkeep
+data/results/*
+!data/results/.gitkeep
+protocol/tasks.local.yaml
+data/source_snapshots/
+outputs/charts/*
+!outputs/charts/.gitkeep
+outputs/contact_sheet/*
+!outputs/contact_sheet/.gitkeep

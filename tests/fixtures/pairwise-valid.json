@@ -1,0 +1,11 @@
+{
+  "schema_version": "pairwise-output-v1",
+  "pair_run_id": "Q001-P01-LR",
+  "task_id": "Q001",
+  "winner": "LEFT",
+  "reason": "The left image satisfies more of the task constraints.",
+  "dimension_winners": {
+    "instruction_fidelity": "LEFT",
+    "visual_quality": "TIE"
+  }
+}

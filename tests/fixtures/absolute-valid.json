@@ -1,0 +1,18 @@
+{
+  "schema_version": "absolute-output-v1",
+  "task_id": "Q001",
+  "blind_id": "B001",
+  "criteria": [
+    {
+      "criterion_id": "Q001-C01",
+      "verdict": "PASS",
+      "evidence": "The requested object is clearly visible."
+    }
+  ],
+  "visual_quality": {
+    "composition": 4,
+    "coherence": 4,
+    "artifact_control": 3,
+    "style_fidelity": 4
+  }
+}

@@ -1,0 +1,4 @@
+interface:
+  display_name: "T2I Eval Judge"
+  short_description: "Validate and score blinded text-to-image evaluations"
+  default_prompt: "Use $judge-t2i-evals to validate and score this frozen text-to-image evaluation batch."
